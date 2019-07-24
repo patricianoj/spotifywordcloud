@@ -18,13 +18,19 @@ app.get('/:username/:password', (request, response) => {
   console.log(username);
   console.log(password);
 
-  response.json(
-    {
-      data : {
-        "hello" : "world"
+  var spawn = require("child_process").spawn;
+
+  var process = spawn('python',["./sample.py", username, password]);
+  process.stdout.on('data', function(data) {
+    console.log(data.toString());
+    response.json(
+      {
+        data : {
+          "hello" : "world"
+        }
       }
-    }
-  );
+    );
+  });
 });
 
 app.listen(8080);
