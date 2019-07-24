@@ -20,7 +20,7 @@ app.get('/:username/:password', (request, response) => {
 
   var spawn = require("child_process").spawn;
 
-  var process = spawn('python',["./sample.py", username, password]);
+  var process = spawn('python',["./CreateWordCloud.py", username, password]);
   process.stdout.on('data', function(data) {
     console.log(data.toString());
     response.json(
