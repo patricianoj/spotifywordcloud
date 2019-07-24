@@ -1,66 +1,51 @@
 import React, { Component } from 'react';
 import ResultsImage from './ResultsImage.js';
 import logo from './images/MicrosoftImage.png';
+const QUERYSTRING = require('querystring');
 
 class Homepage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      imageCreated: true
+      loginLink: ""
     }
   }
 
-  usernameChange(event) {
-    this.setState({username:event.target.value});
+  generateRandomString() {
+    var text = '';
+    var chars = "abcdefghijkmnpqrstuvwxyz23456789";
+    for (var i = 0; i < 16; i++) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return text;
   }
 
-  passwordChange(event) {
-    this.setState({password:event.target.value});
+  componentDidMount() {
+    let client_id = "-";
+    let auth_endpoint = "https://accounts.spotify.com/authorize/?";
+    let redirect_uri = "http://localhost:3000/callback/"// Your redirect uri
+    let scope = "user-top-read user-read-private user-read-email";
+    let str = QUERYSTRING.stringify({
+      client_id: client_id,
+      redirect_uri: redirect_uri,
+      scope: scope,
+      response_type: "code",
+      show_dialog:true
+    });
+
+    this.setState({
+      loginLink: auth_endpoint + str
+    });
   }
-
-  submitClicked() {
-
-  }
-
-  submitClicked(e) {
-    console.log("clicked on create chatroom");
-
-    let data = {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      }
-    };
-    
-    let uri = "http://localhost:8080/" + this.state.username + "/" + this.state.password;
-    fetch(uri, data)
-      .then(res => res.json())
-      .then(info => {
-        console.log(info);
-      });
-  }
-
 
   render() {
     return (
-      <div className="home">
-        <img src={logo} className="MusicWordCloud-logo" alt="Image not available" />
-        <h1>Welcome to MusicWordCloud</h1>
-        <input type="text" placeholder="username" onChange={this.usernameChange.bind(this)} />
-        <p>Value: [{this.state.username}]</p>
-        <input type="text" placeholder="password" onChange={this.passwordChange.bind(this)} />
-        <p>Value: [{this.state.password}]</p>
-        <button onClick={this.submitClicked.bind(this)}>Submit</button>
-
-        <div className="imageHolder">
-          {this.state.imageCreated ?
-            (<ResultsImage />) :
-            (<p></p>)}
+      <div className="Homepage">
+        <div className="HomeHeader">
+          <h1>Welcome to MusicWordCloud</h1>
         </div>
+        <a href={this.state.loginLink} class="isButton">Login to Spotify</a>
       </div>
     );
   }

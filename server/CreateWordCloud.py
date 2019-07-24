@@ -116,7 +116,7 @@ def generate_word_cloud(words, img_color):
     print("Saved file sucessfully.")
 
 
-lyricsarr = passInTopSongs([["Yellow", "Coldplay"]]) # [0][1]
+lyricsarr = passInTopSongs([["Atrevete te te", "Calle 13"]]) # [0][1]
 frequencies, words = process_file(lyricsarr)
 image = process_image()
 generate_word_cloud(frequencies, image)
