@@ -1,0 +1,10 @@
+hello 10
+hi 4
+is 32
+bye 37
+kid 10
+on 23
+cudi 1000
+kanye 1
+west 2
+the 2323
