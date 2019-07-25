@@ -23,6 +23,7 @@ remove_words = set(STOPWORDS)
 WORDFILE = "WordCount.txt"
 IMGFILE = "MicrosoftImage.png"
 
+garbageWords = ["[","]","0","1","2","4","5","6","7","8","9","Verse","Chorus",",","!","?", "\'\'","``","Outro","'d","'s"]
 
 def getSongsAndArtists(token):
     # Given the access token, get the songs and whatever
@@ -57,9 +58,10 @@ def removeStopWords(song):
 
   filtered_song = []
 
-  for w in word_tokens:
+  for w in word_tokens: 
     if w not in stop_words:
-      filtered_song.append(w)
+       if w not in garbageWords:
+        filtered_song.append(w.lower())
 
   return filtered_song
 
