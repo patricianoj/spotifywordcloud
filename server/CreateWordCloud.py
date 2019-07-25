@@ -26,6 +26,8 @@ IMGFILE = "MicrosoftImage.png"
 #    Getting song lyrics given artist and title
 ##########
 
+garbageWords = ["[","]","0","1","2","4","5","6","7","8","9","Verse","Chorus",",","!","?", "\'\'","``","Outro","'d","'s"]
+
 def request_song_info(song_title, artist_name):
     base_url = 'https://api.genius.com'
     headers = {'Authorization': 'Bearer ' + 'AZr2b-EVxiithfATDLRFIBJCDIZnToQMJVnJGzuV_aXWRl2Q-Ht-qeK4qx7jj5PI'}
@@ -50,9 +52,10 @@ def removeStopWords(song):
 
   filtered_song = []
 
-  for w in word_tokens:
+  for w in word_tokens: 
     if w not in stop_words:
-      filtered_song.append(w)
+       if w not in garbageWords:
+        filtered_song.append(w.lower())
 
   return filtered_song
 
