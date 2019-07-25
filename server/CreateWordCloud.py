@@ -16,6 +16,7 @@ from bs4 import BeautifulSoup
 
 
 # Step 3: Constants
+num_tracks = "10"
 
 # Step 4: Constants
 remove_words = set(STOPWORDS)
@@ -25,8 +26,36 @@ IMGFILE = "MicrosoftImage.png"
 garbageWords = ["[","]","0","1","2","4","5","6","7","8","9","Verse","Chorus",",","!","?", "\'\'","``","Outro","'d","'s"]
 
 def getSongsAndArtists(token):
+    tracks = []
+    SPOTIFY_API_BASE_URL = "https://api.spotify.com"
+    API_VERSION = "v1"
+    SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
+    authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+    
+    # Get top tracks for current user
+    top_tracks_payload = {
+        "time_range" : "long_term",
+        "limit" : num_tracks
+    }
+    
+    top_tracks_params = "&".join(["{}={}".format(key, quote(val)) for key, val in top_tracks_payload.items()])
+    top_tracks_api_endpoint = "{}/me/top/tracks".format(SPOTIFY_API_URL)
+    top_tracks_response = requests.get(top_tracks_api_endpoint, headers=authorization_header, params = top_tracks_params)
+    top_tracks = json.loads(top_tracks_response.text)["items"]
+    
+    # format tracks into array of name-artists pairs 
+    for track in top_tracks:
+        artists_names = ""
+        name = track["name"]
+        artists = track["artists"]
+        for artist in artists:
+            artists_names = artists_names + " " + artist["name"]
+        print(artists_names)
+        tracks.append([name, artists_names])
+
+    print(tracks) 
     # Given the access token, get the songs and whatever
-    return None
+    return tracks
 
 ##########
 #    Step 3:
@@ -127,7 +156,7 @@ token = sys.argv[1]
 print('got token', token)
 artistsAndSongsArray = getSongsAndArtists(token)
 print(artistsAndSongsArray)
-lyricsarr = passInTopSongs([["Atrevete te te", "Calle 13"]]) # [0][1]
+lyricsarr = passInTopSongs(artistsAndSongsArray) # [0][1]
 print(lyricsarr)
 frequencies, words = process_file(lyricsarr)
 print(words)
