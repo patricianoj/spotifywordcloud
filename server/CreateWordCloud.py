@@ -20,13 +20,12 @@ remove_words = set(STOPWORDS)
 WORDFILE = "WordCount.txt"
 IMGFILE = "MicrosoftImage.png"
 
+garbageWords = ["[","]","0","1","2","4","5","6","7","8","9","Verse","Chorus",",","!","?", "\'\'","``","Outro","'d","'s"]
 
 ##########
 #    Step 3:
 #    Getting song lyrics given artist and title
 ##########
-
-garbageWords = ["[","]","0","1","2","4","5","6","7","8","9","Verse","Chorus",",","!","?", "\'\'","``","Outro","'d","'s"]
 
 def request_song_info(song_title, artist_name):
     base_url = 'https://api.genius.com'
