@@ -11,7 +11,6 @@ nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 import requests
 from bs4 import BeautifulSoup
-print(sys.args[1])
 
 
 
@@ -58,7 +57,7 @@ def removeStopWords(song):
 
   filtered_song = []
 
-  for w in word_tokens: 
+  for w in word_tokens:
     if w not in stop_words:
        if w not in garbageWords:
         filtered_song.append(w.lower())
@@ -125,8 +124,12 @@ def generate_word_cloud(words, img_color):
     print("Saved file sucessfully.")
 
 token = sys.argv[1]
+print('got token', token)
 artistsAndSongsArray = getSongsAndArtists(token)
+print(artistsAndSongsArray)
 lyricsarr = passInTopSongs([["Atrevete te te", "Calle 13"]]) # [0][1]
+print(lyricsarr)
 frequencies, words = process_file(lyricsarr)
+print(words)
 image = process_image()
 generate_word_cloud(frequencies, image)
