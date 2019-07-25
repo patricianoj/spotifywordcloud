@@ -11,6 +11,9 @@ nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 import requests
 from bs4 import BeautifulSoup
+print(sys.args[1])
+
+
 
 
 # Step 3: Constants
@@ -20,6 +23,10 @@ remove_words = set(STOPWORDS)
 WORDFILE = "WordCount.txt"
 IMGFILE = "MicrosoftImage.png"
 
+
+def getSongsAndArtists(token):
+    # Given the access token, get the songs and whatever
+    return None
 
 ##########
 #    Step 3:
@@ -115,7 +122,8 @@ def generate_word_cloud(words, img_color):
     plt.savefig('../client/src/images/ResultsImage.png')
     print("Saved file sucessfully.")
 
-
+token = sys.argv[1]
+artistsAndSongsArray = getSongsAndArtists(token)
 lyricsarr = passInTopSongs([["Atrevete te te", "Calle 13"]]) # [0][1]
 frequencies, words = process_file(lyricsarr)
 image = process_image()

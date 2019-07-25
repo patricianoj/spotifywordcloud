@@ -22,7 +22,7 @@ class Homepage extends Component {
   }
 
   componentDidMount() {
-    let client_id = "-";
+    let client_id = "5035f40d461f480d987405fb34be0817";
     let auth_endpoint = "https://accounts.spotify.com/authorize/?";
     let redirect_uri = "http://localhost:3000/callback/"// Your redirect uri
     let scope = "user-top-read user-read-private user-read-email";
